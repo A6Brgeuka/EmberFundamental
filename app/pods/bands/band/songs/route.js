@@ -1,37 +1,27 @@
 import Ember from 'ember';
-
-var Song = Ember.Object.extend({
-  title: '',
-  rating: 0,
-  band: ''
-});
-var blackDog = Song.create({
-  title: 'Black Dog',
-  band: 'Led Zeppelin',
-  rating: 3
-});
-var yellowLedbetter = Song.create({
-  title: 'Yellow Ledbetter',
-  band: 'Pearl Jam',
-  rating: 4
-});
-var pretender = Song.create({
-  title: 'The Pretender',
-  band: 'Foo Fighters',
-  rating: 2
-});
-var SongCollection = Ember.Object.extend({
-  content: [],
-  sortProperties: ['rating:desc'],
-  sortedContent: Ember.computed.sort('content', 'sortProperties'),
-});
-var songs = SongCollection.create();
-songs.get('content').pushObject(blackDog);
-songs.get('content').pushObject(yellowLedbetter);
-songs.get('content').pushObject(pretender);
+import Song from '../../../../models/song';
+//import StarRatingComponent from './../../../../components/star-rating';
 
 export default Ember.Route.extend({
   model(){
-    return songs;
+    return this.modelFor('bands.band');
+  },
+  actions: {
+    createSong(){
+      debugger;
+      let controller = this.get('controller');
+      let band = this.modelFor('bands.band');
+      let title = controller.get('title');
+      let song = Song.create({ title: title, band: band });
+      band.get('songs').pushObject(song);
+      controller.set('title', '');
+    },
+    updateRating(params) {
+      //debugger;
+      console.log("route");
+      var song = params.item;
+      let rating = params.rating;
+      song.set('rating', rating);
+    }
   }
 });
