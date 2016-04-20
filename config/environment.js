@@ -12,7 +12,7 @@ module.exports = function(environment) {
         // e.g. 'with-controller': true
       }
     },
-
+    apiHost: 'http://json-api.rockandrollwithemberjs.com',
     podModulePrefix: 'rarwe/pods',
     APP: {
       // Here you can pass flags/options to your application instance
@@ -26,6 +26,9 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.baseURL = '/';
+    ENV.locationType = 'none';
+    // ENV.apiHost = '';̣
   }
 
   if (environment === 'test') {
