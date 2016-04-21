@@ -23,7 +23,6 @@ export default Ember.Route.extend({
           route.transitionTo('bands.band.songs');
         })
         .catch((error) => {
-          debugger;
         });
     },
     didTransaction(){
