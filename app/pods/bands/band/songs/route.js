@@ -1,8 +1,9 @@
 import Ember from 'ember';
+import wait from '../../../../utils/wait';
 
 export default Ember.Route.extend({
   model(){
-    return this.modelFor('bands.band');
+    return Ember.RSVP.reject(this.modelFor('bands.band'));
   },
   actions: {
     createSong(){

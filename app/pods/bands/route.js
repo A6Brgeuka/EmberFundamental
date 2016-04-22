@@ -1,10 +1,12 @@
 import Ember from 'ember';
+import wait from '../../utils/wait';
 
 export default Ember.Route.extend({
   beforeModel(){
   },
   model(){
-    return this.store.findAll('band');
+    var bands = this.store.findAll('band');
+    return wait(bands, 3*1000);
   },
   afterModel(model){
     let bands = model;
@@ -23,7 +25,6 @@ export default Ember.Route.extend({
           route.transitionTo('bands.band.songs');
         })
         .catch((error) => {
-          console.log(error);
         });
     },
     didTransaction(){

@@ -4,7 +4,7 @@ import config from './config/environment';
 const Router = Ember.Router.extend({
   location: config.locationType
 });
-console.log(this);
+
 Router.map(function() {
   this.route('bands', function() {
     this.route('band', { path: ':id'}, function() {
