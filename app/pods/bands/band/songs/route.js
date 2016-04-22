@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import wait from '../../../../utils/wait';
+const {Route} = Ember;
 
-export default Ember.Route.extend({
+export default Route.extend({
   model(){
     return this.modelFor('bands.band');
   },

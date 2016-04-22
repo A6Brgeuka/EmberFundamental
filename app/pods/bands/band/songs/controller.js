@@ -1,20 +1,19 @@
 import Ember from 'ember';
 import { capitalize } from '../../../../helpers/capitalize';
+const {Controller, computed, isEmpty} = Ember;
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   queryParams: {
     sortBy:'sort',
     searchTerm: 's'
   },
-  noSong: Ember.computed('model.songs.length', function() {
+  noSong: computed('model.songs.length', function() {
     return this.get('model.songs.length') === 0;
   }),
   songCreationStarted: false,
-  canCreateSong: Ember.computed('model.songs.length', function(){
-    return this.get('model.songs.length');
-  }),
+  canCreateSong: computed.or('model.songs.length'),
   sortBy: 'ratingDesc',
-  sortProperties: Ember.computed('sortBy', function(){
+  sortProperties: computed('sortBy', function(){
     let options = {
       'ratingDesc': 'rating:desc,title:asc',
       'ratingAsc': 'rating:asc,title:asc',
@@ -23,15 +22,16 @@ export default Ember.Controller.extend({
     };
     return options[this.get('sortBy')].split(',');
   }),
-  sortedSongs: Ember.computed.sort('matchingSongs', 'sortProperties'),
+  sortedSongs: computed.sort('matchingSongs', 'sortProperties'),
   searchTerm: '',
-  matchingSongs: Ember.computed('model.songs.@each.title', 'searchTerm', function () {
-    let searchTerm = this.get('searchTerm').toLowerCase();
-    return this.get('model.songs').filter(function(song){
+  matchingSongs: computed('model.songs.@each.title', 'searchTerm', function () {
+    return this.get('model.songs').filter((song)=>{
+      const searchTerm = this.get('searchTerm').toLowerCase();
       return song.get('title').toLowerCase().indexOf(searchTerm) !== -1;
     });
   }),
-  newSongPlaceholder: Ember.computed('model.name', function(){
+  isAddButtonDisabled: computed.empty('title'),
+  newSongPlaceholder: computed('model.name', function(){
     let bandName = this.get('model.name');
     return `New ${capitalize(bandName)} song`;
   }),
@@ -40,14 +40,16 @@ export default Ember.Controller.extend({
       this.set('canCreateSong', true);
     },
     updateRating(params) {
-      let song = params.item;
-      let rating = params.rating;
+      // let rating = params.rating;
+      // const song = params.item;
+
+      let { item:song, rating} = params;
 
       if(song.get('rating') === rating){
         rating = 0;
       }
       song.set('rating', rating);
-      song.save();
+      return song.save();
     },
     setSorting(options){
       this.set('sortBy', options);
