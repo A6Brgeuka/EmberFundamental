@@ -1,12 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  beforeModel(transition){
+  beforeModel(){
   },
-  model(params, transition){
+  model(){
     return this.store.findAll('band');
   },
-  afterModel(model, transition){
+  afterModel(model){
     let bands = model;
     if(bands.length === 1){
       this.transitionTo('bands.band', bands.get('firstObject'));
@@ -23,7 +23,7 @@ export default Ember.Route.extend({
           route.transitionTo('bands.band.songs');
         })
         .catch((error) => {
-          debugger;
+          console.log(error);
         });
     },
     didTransaction(){

@@ -4,9 +4,9 @@ import config from './config/environment';
 const Router = Ember.Router.extend({
   location: config.locationType
 });
-
+console.log(this);
 Router.map(function() {
-  this.route('bands', { path: '/asd'}, function() {
+  this.route('bands', function() {
     this.route('band', { path: ':id'}, function() {
       this.route('songs');
       this.route('details');

@@ -5,12 +5,12 @@ export default Ember.Controller.extend({
     return this.get('model.songs.length') === 0;
   }),
   songCreationStarted: false,
-  canCreateSong: Ember.computed('songCreationStarted', 'model.songs.length', function(){
-    return this.get('songCreationStarted') || this.get('model.songs.length');
+  canCreateSong: Ember.computed('model.songs.length', function(){
+    return this.get('model.songs.length');
   }),
   actions: {
     enableSongCreation(){
-      this.set('songCreationStarted', true);
+      this.set('canCreateSong', true);
     },
     updateRating(params) {
       let song = params.item;
