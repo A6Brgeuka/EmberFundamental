@@ -1,8 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  beforeModel(){
+  model(){
     debugger;
-    this.transitionTo('bands');
   }
 });
